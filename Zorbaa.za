@@ -1,0 +1,14 @@
+int x = 5$
+float y = 4.3$
+char c$
+int a$
+
+while ( int i = 0; i <= 5; i = i + 1 )
+{
+    if ( i % 2 == 0 )
+    {
+        a = x$
+    }
+}
+
+char a = "a"$
