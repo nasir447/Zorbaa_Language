@@ -1,5 +1,54 @@
 import re
 
+def isOperator(a):
+    for o in operators:
+        if o == a:
+            return True
+
+def isInteger(a):
+    if integer_pattern.fullmatch(a) is not None:
+        return True
+
+def isFloat(a):
+    if float_pattern.fullmatch(a) is not None:
+        return True
+
+def isKeyWord(a):
+    for key in keywords:
+        if key == a:
+            return True
+
+def isLogicalOperator(a):
+    for o in logical_operators:
+        if a == o:
+            return True
+
+def isString(buf):
+    if string_pattern.fullmatch(buf) is not None:
+        return True
+
+def isIdentifier(buf):
+    if identifier_pattern.fullmatch(buf) is not None:
+        return True
+                    
+def isSeparator(a):
+    
+    if separator_pattern.fullmatch(a) is not None:
+        return True
+
+def isTerminal(a):
+    
+    if a == '$':
+        return True
+
+def isSpace(a):
+    if a == ' ':
+        return True
+
+def isComment(a):
+    if comment_pattern.fullmatch(a) is not None:
+        return True
+
 integer=0
 string=0
 float1=0
@@ -9,12 +58,14 @@ oprator=0
 logical_operator=0
 keyword=0
 terminal=0
+comment=0
 
 identifier_pattern=re.compile("[A-Za-z_][A-Za-z0-9_]*")
 integer_pattern=re.compile("[0-9]+")
 separator_pattern=re.compile("[(){}|,; ]")
 float_pattern=re.compile('[0-9]*.[0-9]+')
-string_pattern=re.compile(r'\"(.+?)\"')
+string_pattern=re.compile(r'(\"([^#\"]|\\.)*\")|(\'([^#\']|\\.)*\')')
+comment_pattern=re.compile(r'\#.*\n')
 
 f = open("Zorbaa.za", "r")
 operators=['+','-','/','*','=','!','|','%']
@@ -32,59 +83,57 @@ while True:
     while True:
         if not a:
             break
+
+        if isSeparator(a[i]) == True or isTerminal(a[i]) == True or isOperator(a[i])==True or isInteger(a[i])==True or isFloat(buf)==True or isString(buf)==True:
         
-        if a[i]==' ' or a[i] == '$':
-            
-            for key in keywords:
-                if key == buf:
-                    keyword=keyword+1
-                    print('{} is Keyword'.format(buf))
-                    buf=''
-                    break
+            if isKeyWord(buf) == True:
+                keyword=keyword+1
+                print('{} is Keyword'.format(buf))
+                buf=''
+                
 
-            for o in operators:
-                if o == buf:
-                    oprator=oprator+1
-                    if buf == o:
-                        print('{} is Operator'.format(buf))
-                        buf=''
-                        break
+            if isOperator(buf)==True:
+                oprator=oprator+1
+                
+                print('{} is Operator'.format(buf))
+                buf=''
+                        
 
-            for o in logical_operators:
-                if buf == o:
-                    logical_operator=logical_operator+1
-                    print('{} is Logical Operator'.format(buf))
-                    buf=''
-                    break
+            if isLogicalOperator(buf)==True:
+                logical_operator=logical_operator+1
+                print('{} is Logical Operator'.format(buf))
+                buf=''
+                    
             
-            if float_pattern.fullmatch(buf) is not None:
+            if isFloat(buf) == True:
                 float1=float1+1
                 print('{} is Float'.format(buf))
                 buf=''
             
-            if integer_pattern.fullmatch(buf) is not None:
+            if isInteger(buf) == True:
                 integer=integer+1
                 print('{} is Integer'.format(buf))
                 buf=''
 
-            if string_pattern.fullmatch(buf) is not None:
+            if isString(buf) == True:
                 string=string+1
                 print('{} is String'.format(buf))
                 buf=''
 
-            if identifier_pattern.fullmatch(buf) is not None:
+            if isIdentifier(buf) == True:
                 identifier=identifier+1
                 print('{} is Identifier'.format(buf))
                 buf=''
 
-            if a[i] == '$':
+            if isTerminal(a[i])==True:
                 terminal=terminal+1
                 print('Terminal')
+                
                 buf=''
 
-            buf=''
+            #buf=''
                
-        if a[i] != ' ':       
+        if a[i] != ' ':
             buf+=a[i]
             if separator_pattern.fullmatch(buf) is not None:
                 separator=separator+1
@@ -93,6 +142,9 @@ while True:
 
         i+=1
         if i >= length:
+            if isComment(buf):
+                comment=comment+1
+                print("Comment")
             break
     
     if not b:
@@ -104,56 +156,55 @@ while True:
         if not b:
             break
         
-        if b[i]==' ' or b[i] == '$':
-            for key in keywords:
-                if key == buf:
-                    keyword=keyword+1
-                    print('{} is Keyword'.format(buf))
-                    buf=''
-                    break
-
-            for o in logical_operators:
-                if buf == o:
-                    logical_operator=logical_operator+1
-                    print('{} is Logical Operator'.format(buf))
-                    buf=''
-                    break
-
-            for o in operators:
-                if buf == o:
-                    oprator=oprator+1
-                    print('{} is Operator'.format(buf))
-                    buf=''
-                    break
+        if isSeparator(b[i]) == True or isTerminal(b[i]) == True or isOperator(b[i])==True or isInteger(b[i])==True or isFloat(buf)==True or isString(buf)==True:
             
-            if float_pattern.fullmatch(buf) is not None:
+            if isKeyWord(buf) == True:
+                keyword=keyword+1
+                print('{} is Keyword'.format(buf))
+                buf=''
+                
+
+            if isOperator(buf)==True:
+                oprator=oprator+1
+                
+                print('{} is Operator'.format(buf))
+                buf=''
+                        
+
+            if isLogicalOperator(buf)==True:
+                logical_operator=logical_operator+1
+                print('{} is Logical Operator'.format(buf))
+                buf=''
+                    
+            
+            if isFloat(buf) == True:
                 float1=float1+1
                 print('{} is Float'.format(buf))
                 buf=''
-
-            if integer_pattern.fullmatch(buf) is not None:
+            
+            if isInteger(buf) == True:
                 integer=integer+1
                 print('{} is Integer'.format(buf))
                 buf=''
 
-            if string_pattern.fullmatch(buf) is not None:
+            if isString(buf) == True:
                 string=string+1
                 print('{} is String'.format(buf))
                 buf=''
-            
-            if identifier_pattern.fullmatch(buf) is not None:
+
+            if isIdentifier(buf) == True:
                 identifier=identifier+1
                 print('{} is Identifier'.format(buf))
                 buf=''
 
-            if b[i] == '$':
+            if isTerminal(b[i])==True:
                 terminal=terminal+1
                 print('Terminal')
                 buf=''
 
-            buf=''
+            #buf=''
                
-        if b[i] != ' ':       
+        if b[i] != ' ':
             buf+=b[i]
             if separator_pattern.fullmatch(buf) is not None:
                 separator=separator+1
@@ -162,8 +213,11 @@ while True:
 
         i+=1
         if i >= length:
+            if isComment(buf):
+                comment=comment+1
+                print("Comment")
             break
     
 f.close()
 
-print("Number of Operators = {}, Number of Keywords = {}, Number of Identifiers = {}, Number of Logical Operators = {}, Number of Integers  = {}, Number of Floats = {}, Number of Strings = {}, Number of Separators = {}, Number of Terminals = {}\n".format(oprator, keyword, identifier, logical_operator, integer, float1, string, separator, terminal))
+print("\nNumber of Operators = {}, Number of Keywords = {}, Number of Identifiers = {}, Number of Logical Operators = {}, Number of Integers  = {}, Number of Floats = {}, Number of Strings = {}, Number of Separators = {}, Number of Terminals = {}, Number of Comments = {}\n".format(oprator, keyword, identifier, logical_operator, integer, float1, string, separator, terminal, comment))

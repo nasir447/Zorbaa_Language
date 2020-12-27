@@ -1,4 +1,6 @@
-int x = 5$
+#comment
+int x=5$
+#
 float y = 4.3$
 char c$
 int a$
@@ -12,3 +14,7 @@ while ( int i = 0; i <= 5; i = i + 1 )
 }
 
 char a = "a"$
+
+int c=-2$
+
+"some 'hello'" ,variable, 'thing'$
