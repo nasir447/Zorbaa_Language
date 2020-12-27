@@ -6,6 +6,7 @@ def isOperator(a):
             return True
 
 def isInteger(a):
+    
     if integer_pattern.fullmatch(a) is not None:
         return True
 
@@ -61,7 +62,7 @@ terminal=0
 comment=0
 
 identifier_pattern=re.compile("[A-Za-z_][A-Za-z0-9_]*")
-integer_pattern=re.compile("[0-9]+")
+integer_pattern=re.compile(r"(\+|-)?[0-9]+")
 separator_pattern=re.compile("[(){}|,; ]")
 float_pattern=re.compile('[0-9]*.[0-9]+')
 string_pattern=re.compile(r'(\"([^#\"]|\\.)*\")|(\'([^#\']|\\.)*\')')
@@ -70,7 +71,7 @@ comment_pattern=re.compile(r'\#.*\n')
 f = open("Zorbaa.za", "r")
 operators=['+','-','/','*','=','!','|','%']
 logical_operators=["<=",">=","!=","==","<",">"]
-keywords=["int","char","float","double","void","bool","for","while","do","if","else"]
+keywords=["int","char","float","double","void","bool","for","while","do","if","else","print","input","return","fun","true","false"]
 
 while True:
     a=f.readline()
@@ -84,7 +85,7 @@ while True:
         if not a:
             break
 
-        if isSeparator(a[i]) == True or isTerminal(a[i]) == True or isOperator(a[i])==True or isInteger(a[i])==True or isFloat(buf)==True or isString(buf)==True:
+        if isSeparator(a[i]) == True or isTerminal(a[i]) == True or isOperator(a[i])==True or isLogicalOperator(buf)==True or isInteger(a[i])==True or isFloat(buf)==True or isString(buf)==True:
         
             if isKeyWord(buf) == True:
                 keyword=keyword+1
@@ -93,17 +94,48 @@ while True:
                 
 
             if isOperator(buf)==True:
-                oprator=oprator+1
+                j=i
+                logic=buf+a[i]
                 
-                print('{} is Operator'.format(buf))
-                buf=''
+                if isLogicalOperator(logic) == True:
+                    logical_operator=logical_operator+1
+                    print('{} is Logical Operator'.format(logic))
+                    i=i+1
+                    buf=''
+                elif (buf == "+" or buf == "-") and isInteger(a[i]) == True:
+                    while True:
+                        
+                        if isSeparator(a[j+1]) == True or isTerminal(a[j+1])==True:
+                            i=j
+                            break
+                        j=j+1
+                        logic+=a[j]
+                    
+                    if isInteger(logic) == True:
+                        integer=integer+1
+                        print('{} is Integer'.format(logic))
+                        i=i+1
+                        buf=''
                         
 
-            if isLogicalOperator(buf)==True:
-                logical_operator=logical_operator+1
-                print('{} is Logical Operator'.format(buf))
-                buf=''
-                    
+                else:
+                    #print(u)
+                    oprator=oprator+1
+                    print('{} is Operator'.format(buf))
+                    buf=''
+                        
+            if isLogicalOperator(buf) == True:
+                logic=buf+a[i]
+                
+                if isLogicalOperator(logic) == True:
+                    logical_operator=logical_operator+1
+                    print('{} is Logical Operator'.format(logic))
+                    i=i+1
+                    buf=''
+                else:
+                    logical_operator=logical_operator+1
+                    print('{} is Logical Operator'.format(buf))
+                    buf=''        
             
             if isFloat(buf) == True:
                 float1=float1+1
@@ -165,11 +197,35 @@ while True:
                 
 
             if isOperator(buf)==True:
-                oprator=oprator+1
+                j=i
+                logic=buf+b[i]
                 
-                print('{} is Operator'.format(buf))
-                buf=''
+                if isLogicalOperator(logic) == True:
+                    logical_operator=logical_operator+1
+                    print('{} is Logical Operator'.format(logic))
+                    i=i+1
+                    buf=''
+                elif (buf == "+" or buf == "-") and isInteger(b[i]) == True:
+                    while True:
                         
+                        if isSeparator(b[j+1]) == True or isTerminal(b[j+1])==True:
+                            i=j
+                            break
+                        j=j+1
+                        logic+=b[j]
+                    
+                    if isInteger(logic) == True:
+                        integer=integer+1
+                        print('{} is Integer'.format(logic))
+                        i=i+1
+                        buf=''
+                        
+
+                else:
+                    #print(u)
+                    oprator=oprator+1
+                    print('{} is Operator'.format(buf))
+                    buf=''            
 
             if isLogicalOperator(buf)==True:
                 logical_operator=logical_operator+1

@@ -1,9 +1,12 @@
+
 #comment
 int x=5$
 #
 float y = 4.3$
 char c$
 int a$
+
+odd_or_even$
 
 while ( int i = 0; i <= 5; i = i + 1 )
 {
@@ -17,4 +20,14 @@ char a = "a"$
 
 int c=-2$
 
-"some 'hello'" ,variable, 'thing'$
+variable, 'thing'$
+
+"some 'hello'"$
+
+print("salish")$
+
+a = input('b')$
+
+int f = -3907$
+int g = -82$
+
