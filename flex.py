@@ -1,3 +1,13 @@
+#flex using python for Zorbaa Language
+#
+#Name: Nasir Khalil
+#Roll Number: cs181005
+#date: 28*12*2020
+
+
+
+
+
 import re
 
 def isOperator(a):
