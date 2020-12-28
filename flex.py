@@ -135,10 +135,14 @@ def isTerminal(a):
     
     if a == '$':
         return True
+    else:
+        return False
 
 def isSpace(a):
     if a == ' ':
         return True
+    else:
+        return False
 
 def isComment(a):
     comm=False
